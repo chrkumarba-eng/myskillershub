@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Chatbot</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #0f172a;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .chat-container {
+      width: 100%;
+      max-width: 800px;
+      height: 90vh;
+      background: #111827;
+      border-radius: 20px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid #1f2937;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+    }
+
+    .header {
+      padding: 20px;
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+
+    .header h1 {
+      font-size: 24px;
+    }
+
+    .header p {
+      color: #94a3b8;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+
+    .chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 14px 18px;
+      border-radius: 16px;
+      line-height: 1.5;
+      font-size: 15px;
+      white-space: pre-wrap;
+    }
+
+    .user {
+      align-self: flex-end;
+      background: #2563eb;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background: #1e293b;
+      border: 1px solid #334155;
+    }
+
+    .input-area {
+      display: flex;
+      padding: 20px;
+      gap: 10px;
+      background: #111827;
+      border-top: 1px solid #1f2937;
+    }
+
+    #messageInput {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    #sendBtn {
+      padding: 14px 22px;
+      border: none;
+      border-radius: 12px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    #sendBtn:hover {
+      background: #1d4ed8;
+    }
+
+    .typing {
+      opacity: 0.7;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .chat-container {
+        height: 100vh;
+        border-radius: 0;
+      }
+
+      .message {
+        max-width: 92%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chat-container">
+
+    <div class="header">
+      <h1>AI Assistant</h1>
+      <p>Cloudflare Pages + Worker + OpenAI Ready</p>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+      <div class="message bot">
+        Hello 👋<br><br>
+        Your AI chatbot is connected and ready.
+      </div>
+    </div>
+
+    <div class="input-area">
+      <input
+        type="text"
+        id="messageInput"
+        placeholder="Ask something..."
+      />
+
+      <button id="sendBtn">Send</button>
+    </div>
+
+  </div>
+
+  <script>
+
+    const chatBox = document.getElementById('chatBox');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+
+    // =========================
+    // ADD YOUR CLOUDFLARE WORKER URL HERE
+    // =========================
+
+    const API_URL = 'https://your-worker-name.your-subdomain.workers.dev';
+
+
+    function addMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.classList.add('message', sender);
+      msg.innerHTML = text;
+      chatBox.appendChild(msg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+
+    async function sendMessage() {
+
+      const userMessage = messageInput.value.trim();
+
+      if (!userMessage) return;
+
+      addMessage(userMessage, 'user');
+      messageInput.value = '';
+
+
+      const typingMsg = document.createElement('div');
+      typingMsg.classList.add('message', 'bot', 'typing');
+      typingMsg.innerText = 'AI is typing...';
+      chatBox.appendChild(typingMsg);
+
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+
+      try {
+
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: userMessage
+          })
+        });
+
+
+        const data = await response.json();
+
+        typingMsg.remove();
+
+
+        addMessage(data.reply || 'No response received.', 'bot');
+
+      } catch (error) {
+
+        typingMsg.remove();
+
+        addMessage('Error connecting to AI backend.', 'bot');
+
+        console.error(error);
+      }
+    }
+
+
+    sendBtn.addEventListener('click', sendMessage);
+
+
+    messageInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    });
+
+  </script>
+
+</body>
+</html>
+```
