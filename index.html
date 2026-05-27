@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business Analyst Course</title>
+
+  <style>
+    :root{
+      --bg:#0b1020;
+      --card:#121933;
+      --card-2:#182143;
+      --text:#e8ecff;
+      --muted:#aab4d6;
+      --accent:#6ea8fe;
+      --accent-2:#8b5cf6;
+      --border:rgba(255,255,255,.1);
+      --shadow:0 20px 40px rgba(0,0,0,.25);
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      font-family:Arial, Helvetica, sans-serif;
+      background:linear-gradient(180deg,#09101f 0%, #0f1730 100%);
+      color:var(--text);
+      line-height:1.6;
+    }
+
+    .container{
+      width:min(1200px, calc(100% - 32px));
+      margin:auto;
+    }
+
+    header{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      backdrop-filter:blur(14px);
+      background:rgba(9,16,31,.75);
+      border-bottom:1px solid var(--border);
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:16px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .brand-badge{
+      width:45px;
+      height:45px;
+      border-radius:12px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-2));
+      display:grid;
+      place-items:center;
+      font-weight:bold;
+      color:white;
+      font-size:18px;
+    }
+
+    nav{
+      display:flex;
+      gap:20px;
+    }
+
+    nav a{
+      color:var(--muted);
+      text-decoration:none;
+      font-size:14px;
+    }
+
+    nav a:hover{
+      color:white;
+    }
+
+    .hero{
+      padding:50px 0 20px;
+    }
+
+    .hero-card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:40px;
+      box-shadow:var(--shadow);
+    }
+
+    .eyebrow{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      background:rgba(110,168,254,.12);
+      border:1px solid rgba(110,168,254,.3);
+      font-size:12px;
+      margin-bottom:18px;
+      text-transform:uppercase;
+      color:#d9e7ff;
+    }
+
+    .hero h1{
+      font-size:46px;
+      margin-bottom:14px;
+    }
+
+    .hero p{
+      color:var(--muted);
+      max-width:800px;
+      font-size:17px;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:24px;
+      padding:30px 0 50px;
+    }
+
+    .sidebar,
+    .content-panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+    }
+
+    .sidebar{
+      padding:22px;
+      position:sticky;
+      top:90px;
+      align-self:start;
+    }
+
+    .sidebar h2{
+      margin-bottom:10px;
+    }
+
+    .sidebar p{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:18px;
+    }
+
+    .article-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .article-link{
+      border:none;
+      background:var(--card-2);
+      color:var(--text);
+      padding:14px;
+      border-radius:16px;
+      cursor:pointer;
+      text-align:left;
+      transition:0.2s;
+      border:1px solid transparent;
+      font-size:15px;
+    }
+
+    .article-link:hover,
+    .article-link.active{
+      background:linear-gradient(180deg, rgba(110,168,254,.15), rgba(139,92,246,.12));
+      border-color:rgba(110,168,254,.4);
+    }
+
+    .content-header{
+      padding:22px 26px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .content-header h2{
+      font-size:24px;
+    }
+
+    .content-body{
+      padding:30px;
+      min-height:650px;
+    }
+
+    .placeholder{
+      display:grid;
+      place-items:center;
+      min-height:500px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    .placeholder h3{
+      color:white;
+      font-size:34px;
+      margin-bottom:12px;
+    }
+
+    .article h1{
+      margin-bottom:14px;
+      font-size:38px;
+    }
+
+    .lead{
+      color:#d8e2ff;
+      margin-bottom:25px;
+      font-size:18px;
+    }
+
+    .article h3{
+      margin:24px 0 10px;
+      font-size:24px;
+    }
+
+    .article ul{
+      margin-left:20px;
+      margin-top:12px;
+    }
+
+    .article li{
+      margin-bottom:10px;
+      color:#d9e2ff;
+    }
+
+    .cta-note{
+      margin-top:30px;
+      padding:18px;
+      border-radius:16px;
+      background:rgba(110,168,254,.12);
+      border:1px solid rgba(110,168,254,.3);
+      color:#dce7ff;
+      font-weight:bold;
+    }
+
+    footer{
+      border-top:1px solid var(--border);
+      padding:30px 0;
+      text-align:center;
+      color:var(--muted);
+      margin-top:20px;
+    }
+
+    @media(max-width:900px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+
+      .hero h1{
+        font-size:34px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="container topbar">
+
+    <div class="brand">
+      <div class="brand-badge">BA</div>
+      <div>
+        <h3>Business Analyst Course</h3>
+        <small style="color:var(--muted);">
+          Complete Business Analyst Training Program
+        </small>
+      </div>
+    </div>
+
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Modules</a>
+      <a href="#">Projects</a>
+      <a href="#">Contact</a>
+    </nav>
+
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+
+    <div class="hero-card">
+
+      <span class="eyebrow">Professional Course</span>
+
+      <h1>Business Analyst Master Program</h1>
+
+      <p>
+        Learn Business Analysis from basics to advanced concepts including
+        Agile, Scrum, SQL, Excel, Jira, Documentation, UML, Real-Time Projects,
+        and Interview Preparation.
+      </p>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="container">
+
+  <div class="layout">
+
+    <!-- LEFT SIDE -->
+    <aside class="sidebar">
+
+      <h2>Course Modules</h2>
+
+      <p>
+        Click any module below to view detailed information on the right side.
+      </p>
+
+      <div class="article-list">
+
+        <button class="article-link" onclick="showContent('m1', this)">
+          1. Introduction to Business Analysis
+        </button>
+
+        <button class="article-link" onclick="showContent('m2', this)">
+          2. Requirements Gathering
+        </button>
+
+        <button class="article-link" onclick="showContent('m3', this)">
+          3. Business Process Modeling
+        </button>
+
+        <button class="article-link" onclick="showContent('m4', this)">
+          4. Documentation & Specifications
+        </button>
+
+        <button class="article-link" onclick="showContent('m5', this)">
+          5. Agile & Scrum for BAs
+        </button>
+
+        <button class="article-link" onclick="showContent('m6', this)">
+          6. Data Analysis for BAs
+        </button>
+
+        <button class="article-link" onclick="showContent('m7', this)">
+          7. UML & Modeling Techniques
+        </button>
+
+        <button class="article-link" onclick="showContent('m8', this)">
+          8. Testing & Validation
+        </button>
+
+        <button class="article-link" onclick="showContent('m9', this)">
+          9. Stakeholder Management
+        </button>
+
+        <button class="article-link" onclick="showContent('m10', this)">
+          10. Tools Covered
+        </button>
+
+        <button class="article-link" onclick="showContent('m11', this)">
+          11. Real-Time Projects
+        </button>
+
+        <button class="article-link" onclick="showContent('m12', this)">
+          12. Interview Preparation
+        </button>
+
+      </div>
+
+    </aside>
+
+    <!-- RIGHT SIDE -->
+    <section class="content-panel">
+
+      <div class="content-header">
+        <h2>Module Viewer</h2>
+      </div>
+
+      <div class="content-body" id="contentArea">
+
+        <div class="placeholder">
+          <div>
+            <h3>Select a Module</h3>
+            <p>
+              Click any module from the left side menu to view complete details.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</section>
+
+<footer>
+  © 2026 Business Analyst Course | Designed with HTML, CSS & JavaScript
+</footer>
+
+<script>
+
+function showContent(type, el){
+
+  const contentArea = document.getElementById("contentArea");
+
+  const links = document.querySelectorAll(".article-link");
+
+  links.forEach(link => link.classList.remove("active"));
+
+  el.classList.add("active");
+
+  let content = "";
+
+  if(type === "m1"){
+    content = `
+      <article class="article">
+        <h1>Introduction to Business Analysis</h1>
+
+        <p class="lead">
+          Learn the fundamentals of Business Analysis and understand the role of Business Analysts in organizations.
+        </p>
+
+        <h3>Topics Covered</h3>
+
+        <ul>
+          <li>What is Business Analysis?</li>
+          <li>Role of a Business Analyst</li>
+          <li>Business Analyst vs Data Analyst</li>
+          <li>Software Development Life Cycle</li>
+          <li>Agile vs Waterfall</li>
+          <li>Core BA Skills</li>
+        </ul>
+
+        <div class="cta-note">
+          Foundation module for becoming a successful Business Analyst.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m2"){
+    content = `
+      <article class="article">
+        <h1>Requirements Gathering</h1>
+
+        <p class="lead">
+          Learn how to gather, analyze, and document business requirements.
+        </p>
+
+        <ul>
+          <li>Stakeholder Identification</li>
+          <li>Interviews & Workshops</li>
+          <li>Requirement Elicitation</li>
+          <li>Functional Requirements</li>
+          <li>Non-Functional Requirements</li>
+          <li>Requirement Documentation</li>
+        </ul>
+
+        <div class="cta-note">
+          Requirement gathering is one of the most critical BA responsibilities.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m3"){
+    content = `
+      <article class="article">
+        <h1>Business Process Modeling</h1>
+
+        <p class="lead">
+          Understand process mapping and business workflow improvement techniques.
+        </p>
+
+        <ul>
+          <li>AS-IS & TO-BE Processes</li>
+          <li>Flowcharts</li>
+          <li>BPMN Basics</li>
+          <li>Gap Analysis</li>
+          <li>Process Optimization</li>
+        </ul>
+
+        <div class="cta-note">
+          Learn how organizations improve business efficiency.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m4"){
+    content = `
+      <article class="article">
+        <h1>Documentation & Specifications</h1>
+
+        <p class="lead">
+          Learn professional BA documentation techniques.
+        </p>
+
+        <ul>
+          <li>BRD</li>
+          <li>FRD</li>
+          <li>SRS</li>
+          <li>User Stories</li>
+          <li>Acceptance Criteria</li>
+          <li>Use Cases</li>
+        </ul>
+
+        <div class="cta-note">
+          Documentation bridges business and technical teams.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m5"){
+    content = `
+      <article class="article">
+        <h1>Agile & Scrum for Business Analysts</h1>
+
+        <p class="lead">
+          Learn Agile project methodologies and Scrum practices.
+        </p>
+
+        <ul>
+          <li>Agile Methodology</li>
+          <li>Scrum Framework</li>
+          <li>Sprint Planning</li>
+          <li>Backlog Grooming</li>
+          <li>User Stories</li>
+          <li>Jira Basics</li>
+        </ul>
+
+        <div class="cta-note">
+          Agile is essential for modern software projects.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m6"){
+    content = `
+      <article class="article">
+        <h1>Data Analysis for Business Analysts</h1>
+
+        <p class="lead">
+          Learn Excel, SQL, dashboards, and reporting concepts.
+        </p>
+
+        <ul>
+          <li>Excel Fundamentals</li>
+          <li>Pivot Tables</li>
+          <li>VLOOKUP & XLOOKUP</li>
+          <li>SQL Basics</li>
+          <li>Power BI</li>
+          <li>Tableau</li>
+        </ul>
+
+        <div class="cta-note">
+          Data-driven decision making is a key BA skill.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m7"){
+    content = `
+      <article class="article">
+        <h1>UML & Modeling Techniques</h1>
+
+        <p class="lead">
+          Learn system modeling and visualization techniques.
+        </p>
+
+        <ul>
+          <li>Use Case Diagrams</li>
+          <li>Activity Diagrams</li>
+          <li>Sequence Diagrams</li>
+          <li>Class Diagrams</li>
+          <li>Wireframing</li>
+        </ul>
+
+        <div class="cta-note">
+          UML improves communication between teams.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m8"){
+    content = `
+      <article class="article">
+        <h1>Testing & Validation</h1>
+
+        <p class="lead">
+          Learn testing support activities performed by Business Analysts.
+        </p>
+
+        <ul>
+          <li>User Acceptance Testing</li>
+          <li>Test Cases</li>
+          <li>Requirement Traceability Matrix</li>
+          <li>Defect Tracking</li>
+          <li>Validation Techniques</li>
+        </ul>
+
+        <div class="cta-note">
+          Ensure final solutions meet business requirements.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m9"){
+    content = `
+      <article class="article">
+        <h1>Stakeholder Management</h1>
+
+        <p class="lead">
+          Learn communication and stakeholder handling techniques.
+        </p>
+
+        <ul>
+          <li>Presentation Skills</li>
+          <li>Client Communication</li>
+          <li>Conflict Resolution</li>
+          <li>Meeting Management</li>
+          <li>Negotiation Skills</li>
+        </ul>
+
+        <div class="cta-note">
+          Strong communication is critical for Business Analysts.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m10"){
+    content = `
+      <article class="article">
+        <h1>Tools Covered</h1>
+
+        <p class="lead">
+          Learn industry-standard Business Analyst tools.
+        </p>
+
+        <ul>
+          <li>Microsoft Excel</li>
+          <li>Jira</li>
+          <li>Confluence</li>
+          <li>Power BI</li>
+          <li>Tableau</li>
+          <li>Microsoft Visio</li>
+        </ul>
+
+        <div class="cta-note">
+          Practical tool experience increases employability.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m11"){
+    content = `
+      <article class="article">
+        <h1>Real-Time Projects</h1>
+
+        <p class="lead">
+          Work on practical projects and industry case studies.
+        </p>
+
+        <ul>
+          <li>Banking Project</li>
+          <li>E-Commerce System</li>
+          <li>Healthcare Project</li>
+          <li>Agile Simulation</li>
+        </ul>
+
+        <div class="cta-note">
+          Real-time projects provide practical industry exposure.
+        </div>
+      </article>
+    `;
+  }
+
+  if(type === "m12"){
+    content = `
+      <article class="article">
+        <h1>Interview Preparation</h1>
+
+        <p class="lead">
+          Prepare for Business Analyst job interviews confidently.
+        </p>
+
+        <ul>
+          <li>Mock Interviews</li>
+          <li>Resume Building</li>
+          <li>Scenario Questions</li>
+          <li>Communication Tips</li>
+          <li>Job Readiness</li>
+        </ul>
+
+        <div class="cta-note">
+          Become fully job-ready with interview preparation support.
+        </div>
+      </article>
+    `;
+  }
+
+  contentArea.innerHTML = content;
+}
+
+</script>
+
+</body>
+</html>
