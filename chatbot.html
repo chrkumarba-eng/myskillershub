@@ -545,14 +545,12 @@ async function sendMessage(){
 
     const data = await response.json();
 
-    typing.remove();
+typing.remove();
 
-
-    addMessage(
-      data.reply || "No response received.",
-      "bot"
-    );
-
+addMessage(
+  JSON.stringify(data, null, 2),
+  "bot"
+);
   }
 
   catch(error){
